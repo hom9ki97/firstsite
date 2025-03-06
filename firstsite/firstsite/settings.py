@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = 'main.AdvUser'
+LOGOUT_REDIRECT_URL = 'main:index'
 
 # Application definition
 

@@ -1,0 +1,16 @@
+{% extends 'layout/basic.html'%}
+
+{% load django_bootstrap5 %}
+{% block title %}Вход{% endblock %}
+
+{% block content%}
+        <div class="col-8 offset-2 mt-1 shadow p-3 mb-5 bg-body-tertiary rounded mt-5 p-3">
+            <h2 class="text-center">Профиль пользователя</h2>
+            {% if user.first_name and user.last_name %}
+            <p>Здравствуйте, {{user.first_name}} {{user.last_name }}!</p>
+            {% else %}
+            <p>Здравствуйте!</p>
+            {% endif %}
+            <h3>Ваши комментарии</h3>
+        </div>
+{% endblock %}

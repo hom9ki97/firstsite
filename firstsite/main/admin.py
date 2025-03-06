@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import AdvUser, Topic, HomeWork, Lessons
+
+admin.site.register(Topic)
+admin.site.register(Lessons)
+admin.site.register(HomeWork)
+admin.site.register(AdvUser)
