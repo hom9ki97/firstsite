@@ -1,0 +1,22 @@
+{% extends 'layout/basic.html'%}
+
+{% block content%}
+        <div class="col-8 offset-2 mt-1 shadow p-3 mb-5 bg-body-tertiary rounded mt-5 p-3">
+            <h1 class="mb-4">Домашние задания для урока: {{ lesson.title }} {{ lesson.order }}</h1>
+            <div class="list-group">
+                {% for homework in homeworks %}
+                    <div class="list-group-item">
+                        <h4>Задание № {{ homework.order }}</h4>
+                        <p>{{ homework.task }}</p>
+                    </div>
+                {% empty %}
+                    <div class="list-group-item">
+                        <p>Домашние задания отсутствуют.</p>
+                    </div>
+                {% endfor %}
+            </div>
+        <a href="{% url 'main:topic' page='topic' %}" class="btn btn-secondary mt-3">Назад к темам</a>
+
+        </div>
+
+{% endblock %}

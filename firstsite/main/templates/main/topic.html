@@ -1,0 +1,37 @@
+{% extends 'layout/basic.html'%}
+
+{% block content%}
+        <div class="col-8 offset-2 mt-1 shadow p-3 mb-5 bg-body-tertiary rounded mt-5 p-3">
+            <h2 class="text-center">Темы занятий</h2>
+            <div class="accordion" id="topicsAccordion">
+                {% for topic in topics %}
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading{{ forloop.counter }}">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="true"
+                                    aria-controls="collapse{{ forloop.counter }}">
+                                {{ topic.name }}
+                            </button>
+                        </h2>
+                        <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse"
+                             aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#topicsAccordion">
+                            <div class="accordion-body">
+                                {% for lesson in topic.lessons.all %}
+                                    <div class="mb-3">
+                                        <a class="text-muted text-decoration-none"
+                                           href="{% url 'main:lesson' lesson.id %}">
+                                            <h5>{{ lesson.title }} {{ lesson.order }}</h5>
+                                        </a>
+                                        <p>{{ lesson.content }}</p>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+
+        </div>
+
+{% endblock %}
