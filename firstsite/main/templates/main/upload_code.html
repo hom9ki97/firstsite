@@ -1,0 +1,15 @@
+{% extends 'layout/basic.html'%}
+
+{% block content%}
+
+        <div class="col-8 offset-2 mt-1 shadow p-3 mb-5 bg-body-tertiary rounded mt-5 p-3">
+            <h1 class="mb-4">Загрузить пример кода</h1>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Загрузить</button>
+            </form>
+
+        </div>
+
+{% endblock %}

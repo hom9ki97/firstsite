@@ -20,10 +20,16 @@ class Lessons(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        verbose_name = 'Тема урока'
+        verbose_name_plural = 'Темы уроков'
+
 
 class Topic(models.Model):
     name = models.CharField(max_length=100, db_index=True, verbose_name='Тема урока')
     description = models.TextField()
+    language = models.ForeignKey('Language', on_delete=models.PROTECT, null=True, blank=True,
+                                 verbose_name='Язык программирования', related_name='topic')
 
     def __str__(self):
         return self.name
@@ -44,3 +50,36 @@ class HomeWork(models.Model):
 
     def get_topic(self):
         return self.lesson.topic
+
+    class Meta:
+        verbose_name = 'Домашнее задание'
+        verbose_name_plural = 'Домашнии занятия'
+
+
+class CodeExample(models.Model):
+    lesson = models.ForeignKey('Lessons', on_delete=models.PROTECT, related_name='code_examples',
+                               verbose_name='Код урока', null=True, blank=True)
+    homework = models.ForeignKey('Homework', on_delete=models.PROTECT, related_name='code_examples',
+                                 verbose_name='Код ДЗ', null=True, blank=True)
+    title = models.CharField(max_length=100, default='Пример кода', verbose_name='Название примера')
+    code_file = models.FileField(upload_to='code_examples/', verbose_name='Файл с кодом')
+    description = models.TextField(blank=True, verbose_name='Описание')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Пример кода'
+        verbose_name_plural = 'Примеры кода'
+
+
+class Language(models.Model):
+    language = models.CharField(max_length=50, db_index=True, verbose_name='Язык программирования')
+
+    def __str__(self):
+        return self.language
+
+    class Meta:
+        verbose_name = 'Язык программирования'
+        verbose_name_plural = 'Языки программирования'

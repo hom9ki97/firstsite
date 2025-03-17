@@ -1,0 +1,36 @@
+{% extends 'layout/basic.html'%}
+
+{% block content%}
+
+        <div class="col-10 offset-1 mt-1 shadow p-3 mb-5 bg-body-tertiary rounded mt-5 p-3">
+            <h2 class="text-center my-2">Домашнее задание № {{homework.order}}</h2>
+            <p>{{ homework.task }}</p>
+            <h3 class="mb-4">Тема урока: {{ lesson.title }}</h3>
+            <p class=" text-center mb-4">{{ lesson.content }}</p>
+            <h2 class="text-center mt-5">Примеры кода</h2>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a href="{% url 'main:upload_code_hw' %}" class="btn btn-primary my-3">Загрузить новый пример</a>
+                </div>
+                <div class="list-group">
+                {% for example in code_examples %}
+                    <div class="list-group-item">
+                        <p>{{ example.description }}</p>
+                        <pre><code>{{ example.code_content }}</code></pre>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{% url 'main:del_exemple_code' example.id %}" class="btn btn-danger my-3">Удалить пример кода</a>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="list-group-item">
+                        <p>Примеры кода отсутствуют.</p>
+                    </div>
+                {% endfor %}
+            </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                    <a href="{% url 'main:lesson' lesson.id %}" class="btn btn-secondary mt-3">Назад к уроку</a>
+        </div>
+
+
+        </div>
+
+{% endblock %}

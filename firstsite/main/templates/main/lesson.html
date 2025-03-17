@@ -1,22 +1,65 @@
 {% extends 'layout/basic.html'%}
 
 {% block content%}
-        <div class="col-8 offset-2 mt-1 shadow p-3 mb-5 bg-body-tertiary rounded mt-5 p-3">
-            <h1 class="mb-4">Домашние задания для урока: {{ lesson.title }} {{ lesson.order }}</h1>
+
+        <div class="col-10 offset-1 mt-1 shadow p-3 mb-5 bg-body-tertiary rounded mt-5 p-3">
+            <h1 class="mb-4">Практика для урока: {{ lesson.title }}</h1>
+            <p class=" text-center mb-4">{{ lesson.content }}</p>
+            <h2 class="mt-5">Примеры кода</h2>
+            {% if not code_examples %}
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a href="{% url 'main:upload_code' %}" class="btn btn-primary my-3">Загрузить новый пример</a>
+                </div>
+            {% endif %}
             <div class="list-group">
-                {% for homework in homeworks %}
+                {% for example in code_examples %}
                     <div class="list-group-item">
-                        <h4>Задание № {{ homework.order }}</h4>
-                        <p>{{ homework.task }}</p>
+                        <p>{{ example.description }}</p>
+                        <pre><code>{{ example.code_content }}</code></pre>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{% url 'main:del_exemple_code' example.id %}" class="btn btn-danger my-3">Удалить пример кода</a>
+                        </div>
                     </div>
                 {% empty %}
                     <div class="list-group-item">
-                        <p>Домашние задания отсутствуют.</p>
+                        <p>Примеры кода отсутствуют.</p>
                     </div>
                 {% endfor %}
             </div>
-        <a href="{% url 'main:topic' page='topic' %}" class="btn btn-secondary mt-3">Назад к темам</a>
+            <h3 class="text-center">Список домашних заданий.</h3>
+            <div class="container text-center mt-3">
+              <div class="row align-items-start">
+                  {% for homework in homeworks %}
+                <div class="col mx-3 shadow p-3 mb-5 bg-body-tertiary rounded mt-5 p-3">
+                  <h4>Задание № {{ homework.order }}</h4>
+                   <p>{{ homework.task }}</p>
+                    <a href="{% url 'main:home_work_page' homework.id %}" class="btn btn-primary  my-3">Показать код ДЗ</a>
+                </div>
 
+                {% empty %}
+                <div class="col">
+                  <p>Домашние задания отсутствуют.</p>
+                </div>
+              </div>
+                {% endfor %}
+            </div>
+
+<!--            <div class="list-group">-->
+<!--                {% for homework in homeworks %}-->
+<!--                    <div class="list-group-item">-->
+<!--                        <h4>Задание № {{ homework.order }}</h4>-->
+<!--                        <p>{{ homework.task }}</p>-->
+<!--                    </div>-->
+<!--                {% empty %}-->
+<!--                    <div class="list-group-item">-->
+<!--                        <p>Домашние задания отсутствуют.</p>-->
+<!--                    </div>-->
+<!--                {% endfor %}-->
+<!--            </div>-->
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                <a href="{% url 'main:topic' lesson.topic.language.id %}" class="btn btn-secondary my-3">Назад к темам</a>
+                <a href="{% url 'main:add_hw' lesson_id=lesson.id %}" class="btn btn-primary  my-3">Добавить ДЗ</a>
+            </div>
         </div>
 
 {% endblock %}
